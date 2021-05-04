@@ -23,8 +23,8 @@ branches:
     - main
 
 before_install:
-  - npm i
-  - npm test
+  # - npm i
+  # - npm test
   - sudo service mysql stop
   - export PATH=$PATH:$HOME/.local/bin
   - export IMAGE_NAME=davardanian/minesweeper-react
