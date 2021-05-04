@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: raz4
+  namespace: development
+  labels:
+    app: raz4
+spec:
+  replicas: 1
+  minReadySeconds: 60
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: $REPO_URL/$IMAGE_NAME:$TRAVIS_COMMIT
+          ports:
+            - containerPort: $API_PORT
+              name: http
+          envFrom:
+            - secretRef:
+                name: v4-secrets-web

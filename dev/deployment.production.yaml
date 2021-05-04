@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: production
+  labels:
+    app: frontend
+spec:
+  replicas: 3
+  minReadySeconds: 60 # wait for 60 seconds before considering pod as ready and continuing with next
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: $REPO_URL/$IMAGE_NAME:$TRAVIS_COMMIT
+          ports:
+            - containerPort: $API_PORT
+              name: http
+          envFrom:
+            - secretRef:
+                name: v4-secrets-web

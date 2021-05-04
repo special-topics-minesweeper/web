@@ -1,0 +1,74 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: echo-ingress-router
+  namespace: dev
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+spec:
+  # tls:
+  #   - hosts:
+  #       - 'api-dev.mydomain.com'
+  #       - 'app-dev.mydomain.com'
+  #     secretName: letsencrypt-prod
+  rules:
+    # - host: api-dev.mydomain.com
+     - http:
+        paths:
+        - pathType: Prefix
+            path: '/staging'
+            frontend:
+              serviceName: frontend
+              servicePort: 80
+    # - host: app-dev.mydomain.com
+    #   http:
+    #     paths:
+    #       - backend:
+    #           serviceName: raz4app
+    #           servicePort: 1338
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: echo-ingress-router
+  namespace: production
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+spec:
+  # tls:
+  #   - hosts:
+  #       - 'raz4api.mydomain.com'
+  #       - 'app.mydomain.com'
+  #     secretName: letsencrypt-prod
+  rules:
+    # - host: raz4api.mydomain.com
+     - http:
+        paths:
+        - pathType: Prefix
+            path: '/production'
+            frontend:
+              serviceName: frontend
+              servicePort: 80
+    # - host: app.mydomain.com
+    #   http:
+    #     paths:
+    #       - backend:
+    #           serviceName: raz4app
+    #           servicePort: 1338
+    # - host: beta.mydomain.com
+    #   http:
+    #     paths:
+    #       - backend:
+    #           serviceName: raz4app
+    #           servicePort: 1338
