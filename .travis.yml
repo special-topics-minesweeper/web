@@ -23,6 +23,7 @@ branches:
     - main
 
 before_install:
+  - npm test
   - sudo service mysql stop
   - export PATH=$PATH:$HOME/.local/bin
   - export IMAGE_NAME=davardanian/minesweeper-react
@@ -38,7 +39,6 @@ install:
   - docker tag $REPO_URL/$IMAGE_NAME:latest $REPO_URL/$IMAGE_NAME:$TRAVIS_BRANCH
 
 script:
-  - docker run $REPO_URL/$IMAGE_NAME npm test|| travis_terminate 1
   - docker push $REPO_URL/$IMAGE_NAME:latest
   - docker push $REPO_URL/$IMAGE_NAME:$TRAVIS_COMMIT
   - docker push $REPO_URL/$IMAGE_NAME:$TRAVIS_BRANCH
