@@ -7,8 +7,7 @@ COMMIT_SHA1=$TRAVIS_COMMIT
 export COMMIT_SHA1=$TRAVIS_COMMIT
 
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-chmod u+x ./kubectl
-./dev/platform.sh
+
 echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
 
 
@@ -19,7 +18,7 @@ then
   k8s_namespace=production
 else
   k8s_namespace=$TRAVIS_BRANCH
-
+fi
 # lower case name needed for kubernetes secrets name
 GIT_REPO_NAME_LC=$(echo $GIT_REPO_NAME | tr "[:upper:]" "[:lower:]")
 # create/update secrets
