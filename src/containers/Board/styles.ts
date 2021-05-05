@@ -20,16 +20,15 @@ const useStyles = createUseStyles({
     display: 'grid',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     border: '1px solid rgba(0, 0, 0, 0.2)',
     textAlign: 'center',
     aspectRatio: 1,
     cursor: 'pointer',
     '&:active': {
-      backgroundColor: '#e4e4e4'
+      backgroundColor: '#333333'
     }
   },
 
-}, {name: 'board'});
+}, { name: 'board' });
 
 export default useStyles;
