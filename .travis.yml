@@ -1,6 +1,6 @@
 # Use Dockerized infrastructure
 sudo: false
-dist: ubuntu
+dist: bionic
 language: generic
 cache:
   bundler: true
