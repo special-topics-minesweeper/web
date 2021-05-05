@@ -1,12 +1,12 @@
 # Stage 1
 
-FROM tiangolo/node-frontend:10 as build-stage
+FROM node:12-alpine as build-step
 
 RUN mkdir /app
 
 WORKDIR /app
 
-COPY package*.json /app
+COPY package.json /app
 
 RUN npm install
 
@@ -18,6 +18,4 @@ RUN npm run build
 
 FROM nginx:1.19.10-alpine
 
-COPY --from=build-stage /app/build/ /usr/share/nginx/html
-# Copy the default nginx.conf provided by tiangolo/node-frontend
-COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-step /app/build /usr/share/nginx/html
