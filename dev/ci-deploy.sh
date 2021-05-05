@@ -7,7 +7,7 @@ COMMIT_SHA1=$TRAVIS_COMMIT
 export COMMIT_SHA1=$TRAVIS_COMMIT
 
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-
+chmod u+x ./kubectl
 echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
 
 
