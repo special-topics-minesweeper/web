@@ -39,6 +39,10 @@ install:
   - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TRAVIS_BRANCH
 
 script:
+  - echo $DOCKER_PASSWORD
+  - echo $DOCKER_USERNAME
+  - echo DOCKER_PASSWORD
+  - echo DOCKER_USERNAME
   - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
   - docker push $IMAGE_NAME:latest
