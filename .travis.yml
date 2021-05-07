@@ -1,15 +1,14 @@
 # Use Dockerized infrastructure
 sudo: false
-dist: ubuntu
-language: generic
-cache:
-  bundler: true
+dist: bionic
+language: node_js
+cache: npm
 
 git:
   depth: 10
 
 node_js:
-  - '9'
+  - '14'
 
 services:
   - docker
@@ -22,9 +21,12 @@ branches:
     - dev
     - main
 
+before_script:
+  - npm update
 before_install:
-  # - npm i
-  # - npm test
+  - git pull
+  # Enable for testing
+  # - npm test --passWithNoTests
   - sudo service mysql stop
   - export PATH=$PATH:$HOME/.local/bin
   - export IMAGE_NAME=davardanian/minesweeper-react
@@ -39,16 +41,10 @@ install:
   - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TRAVIS_BRANCH
 
 script:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo $DOCKER_PASSWORD
+  - echo $DOCKER_USERNAME
+  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
   - docker push $IMAGE_NAME:latest
   - docker push $IMAGE_NAME:$TRAVIS_COMMIT
   - docker push $IMAGE_NAME:$TRAVIS_BRANCH
-
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: ./dev/ci-deploy.sh
-  on:
-    all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^dev|main$
