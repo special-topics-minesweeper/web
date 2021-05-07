@@ -1,15 +1,14 @@
 # Use Dockerized infrastructure
 sudo: false
 dist: bionic
-language: generic
-cache:
-  bundler: true
+language: node_js
+cache: npm
 
 git:
   depth: 10
 
 node_js:
-  - '9'
+  - '14'
 
 services:
   - docker
@@ -22,8 +21,11 @@ branches:
     - dev
     - main
 
+before_script:
+  - npm update
 before_install:
   - ls
+  - git pull
   # - npm test
   - sudo service mysql stop
   - export PATH=$PATH:$HOME/.local/bin
