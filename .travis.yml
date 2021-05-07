@@ -23,7 +23,7 @@ branches:
     - main
 
 before_install:
-  # - npm i
+  - ls
   # - npm test
   - sudo service mysql stop
   - export PATH=$PATH:$HOME/.local/bin
