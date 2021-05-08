@@ -26,7 +26,7 @@ before_script:
 before_install:
   - git pull
   # Enable for testing
-  # - npm test --passWithNoTests
+  - npm test
   - sudo service mysql stop
   - export PATH=$PATH:$HOME/.local/bin
   - export IMAGE_NAME=davardanian/minesweeper-react
