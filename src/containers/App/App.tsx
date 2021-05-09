@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 
 import Header from '../../componets/Header';
-import useStyles from "./styles";
 
 import { ThemeProvider } from '@material-ui/styles';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
@@ -14,7 +13,6 @@ import Game from "../Game";
 function App() {
   const prefersDarkMode = useMemo(() => matchMedia && matchMedia('(prefers-color-scheme: dark)').matches, []);
 
-  const classes = useStyles();
   return (
     <BrowserRouter>
       <ThemeProvider theme={prefersDarkMode? themeDark: themeLight}>

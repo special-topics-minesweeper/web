@@ -1,25 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import classNames from 'classnames';
 import { Paper } from "@material-ui/core";
 
 import useStyles from "./styles";
-import { IBoard, ICell } from "./types";
+import { IBoard } from "./types";
 import FlagIcon from "../../componets/Icons/Flag";
 import BombIcon from "../../componets/Icons/Bomb";
+import { GAME_SIZE } from '../Game/types';
 
-const Board = ({ width, height }: IBoard) => {
-  const [data, setData] = useState<ICell[]>([]);
-  useEffect(() => {
-    const arr = [];
-    for(let  i = 0; i < width*height; i++){
-      arr.push({
-        isOpen: i % 7 === 0,
-        isBomb: i % 5 === 0,
-        isFlagged: i % 9 === 0,
-      });
-    }
-    setData(arr);
-  }, [width, height]);
+const Board = ({ difficulty, data, setData }: IBoard) => {
 
   const onCellClick = useCallback((e, index) => {
     const newData = data.map((item, i) => {
@@ -29,7 +18,7 @@ const Board = ({ width, height }: IBoard) => {
       return {...item};
     });
     setData(newData);
-  }, [data]);
+  }, [data, setData]);
 
   const onCellFlag = useCallback((e, index) => {
     e.preventDefault();
@@ -40,12 +29,13 @@ const Board = ({ width, height }: IBoard) => {
       return {...item};
     });
     setData(newData);
-  }, [data]);
+  }, [data, setData]);
 
-  const classes = useStyles({ width, height });
-  return (<Paper className={classNames(classes.root, {
-    horizontal: width > 1.5 * height,
-  })} elevation={6}>
+  const classes = useStyles({
+    width: GAME_SIZE[difficulty].width,
+    height: GAME_SIZE[difficulty].height,
+  });
+  return (<Paper className={classNames(classes.root, difficulty)} elevation={6}>
     {
       data.map((item, i) => (
         <div
@@ -56,7 +46,7 @@ const Board = ({ width, height }: IBoard) => {
             isBomb: item.isBomb,
             isFlagged: item.isFlagged,
           })} key={i}>
-          <span className={classes.text}>
+          <span className={classNames(classes.content, difficulty)}>
             {item.isOpen && i%4 === 0 && 9}
             {item.isBomb && <BombIcon />}
             {item.isFlagged && <FlagIcon />}
