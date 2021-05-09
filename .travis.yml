@@ -26,7 +26,6 @@ before_script:
 before_install:
   - git pull
   # Enable for testing
-  # test
   - npm test
   - sudo service mysql stop
   - export PATH=$PATH:$HOME/.local/bin
