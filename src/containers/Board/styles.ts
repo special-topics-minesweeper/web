@@ -5,15 +5,17 @@ import { IBoard } from "./types";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'grid',
-    gridTemplateColumns: (props: IBoard) => 'auto '.repeat(props.size),
-    // maxWidth: 512,
-    // maxHeight: 512,
+    gridTemplateColumns: (props: IBoard) => 'auto '.repeat(props.width),
+    gridColumn: '1 / span 1',
     '-webkit-touch-callout': 'none',
     '-webkit-user-select': 'none',
     '-khtml-user-select': 'none',
     '-moz-user-select': 'none',
     '-ms-user-select': 'none',
     'user-select': 'none',
+    '&.horizontal': {
+      gridColumn: '1 / span 4',
+    }
   },
   cell: {
     display: 'grid',
@@ -39,12 +41,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   text: {
+    fontSize: 16,
     fontWeight: 'bold',
     position: 'absolute',
     top: 'calc(50% - 8px)',
     left: 0,
     right: 0,
     bottom: 0,
+    '& svg':{
+      fontSize: 16,
+    }
   }
 }), { name: 'board' });
 

@@ -4,12 +4,14 @@ import { Paper } from "@material-ui/core";
 
 import useStyles from "./styles";
 import { IBoard, ICell } from "./types";
+import FlagIcon from "../../componets/Icons/Flag";
+import BombIcon from "../../componets/Icons/Bomb";
 
-const Board = ({ size }: IBoard) => {
+const Board = ({ width, height }: IBoard) => {
   const [data, setData] = useState<ICell[]>([]);
   useEffect(() => {
     const arr = [];
-    for(let  i = 0; i < size*size; i++){
+    for(let  i = 0; i < width*height; i++){
       arr.push({
         isOpen: i % 7 === 0,
         isBomb: i % 5 === 0,
@@ -17,7 +19,8 @@ const Board = ({ size }: IBoard) => {
       });
     }
     setData(arr);
-  }, [size])
+  }, [width, height]);
+
   const onCellClick = useCallback((e, index) => {
     const newData = data.map((item, i) => {
       if(i === index) {
@@ -26,7 +29,8 @@ const Board = ({ size }: IBoard) => {
       return {...item};
     });
     setData(newData);
-  }, [data])
+  }, [data]);
+
   const onCellFlag = useCallback((e, index) => {
     e.preventDefault();
     const newData = data.map((item, i) => {
@@ -36,9 +40,12 @@ const Board = ({ size }: IBoard) => {
       return {...item};
     });
     setData(newData);
-  }, [data])
-  const classes = useStyles({ size });
-  return (<Paper className={classes.root} elevation={6}>
+  }, [data]);
+
+  const classes = useStyles({ width, height });
+  return (<Paper className={classNames(classes.root, {
+    horizontal: width > 1.5 * height,
+  })} elevation={6}>
     {
       data.map((item, i) => (
         <div
@@ -46,11 +53,13 @@ const Board = ({ size }: IBoard) => {
           onContextMenu={(e) => onCellFlag(e, i)}
           className={classNames(classes.cell, {
             isOpen: item.isOpen,
-            // isBomb: item.isBomb,
+            isBomb: item.isBomb,
             isFlagged: item.isFlagged,
           })} key={i}>
           <span className={classes.text}>
-            {item.isOpen && i%4===0 && i}
+            {item.isOpen && i%4 === 0 && 9}
+            {item.isBomb && <BombIcon />}
+            {item.isFlagged && <FlagIcon />}
           </span>
         </div>
       ))

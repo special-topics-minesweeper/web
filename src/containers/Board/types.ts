@@ -1,5 +1,6 @@
 export interface IBoard {
-  size: number;
+  width: number;
+  height: number;
 }
 
 export interface ICell {

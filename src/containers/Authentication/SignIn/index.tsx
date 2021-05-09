@@ -34,7 +34,7 @@ const SignIn = ({ changeView }: IAuth) => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Username or Email"
             name="email"
             autoComplete="email"
             autoFocus
