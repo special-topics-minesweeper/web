@@ -1,19 +1,23 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { IBoard } from "./types";
+import { IBoardStyles } from "./types";
+import { Difficulty } from "../Game/types";
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'grid',
-    gridTemplateColumns: (props: IBoard) => 'auto '.repeat(props.size),
-    // maxWidth: 512,
-    // maxHeight: 512,
+    gridTemplateColumns: (props: IBoardStyles) => 'auto '.repeat(props.width),
+    gridColumn: '1 / span 1',
     '-webkit-touch-callout': 'none',
     '-webkit-user-select': 'none',
     '-khtml-user-select': 'none',
     '-moz-user-select': 'none',
     '-ms-user-select': 'none',
     'user-select': 'none',
+
+    [`&.${Difficulty.HARD}`]: {
+      gridColumn: '1 / span 4',
+    },
   },
   cell: {
     display: 'grid',
@@ -38,13 +42,31 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.warning.light,
     },
   },
-  text: {
+  content: {
     fontWeight: 'bold',
     position: 'absolute',
     top: 'calc(50% - 8px)',
     left: 0,
     right: 0,
     bottom: 0,
+    [`&.${Difficulty.EASY}`]: {
+      fontSize: 20,
+      '& svg': {
+        fontSize: 24,
+      }
+    },
+    [`&.${Difficulty.MEDIUM}`]: {
+      fontSize: 16,
+      '& svg': {
+        fontSize: 20,
+      }
+    },
+    [`&.${Difficulty.HARD}`]: {
+      fontSize: 12,
+      '& svg': {
+        fontSize: 16,
+      }
+    }
   }
 }), { name: 'board' });
 

@@ -1,23 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import classNames from 'classnames';
 import { Paper } from "@material-ui/core";
 
 import useStyles from "./styles";
-import { IBoard, ICell } from "./types";
+import { IBoard } from "./types";
+import FlagIcon from "../../componets/Icons/Flag";
+import BombIcon from "../../componets/Icons/Bomb";
+import { GAME_SIZE } from '../Game/types';
 
-const Board = ({ size }: IBoard) => {
-  const [data, setData] = useState<ICell[]>([]);
-  useEffect(() => {
-    const arr = [];
-    for(let  i = 0; i < size*size; i++){
-      arr.push({
-        isOpen: i % 7 === 0,
-        isBomb: i % 5 === 0,
-        isFlagged: i % 9 === 0,
-      });
-    }
-    setData(arr);
-  }, [size])
+const Board = ({ difficulty, data, setData }: IBoard) => {
+
   const onCellClick = useCallback((e, index) => {
     const newData = data.map((item, i) => {
       if(i === index) {
@@ -26,7 +18,8 @@ const Board = ({ size }: IBoard) => {
       return {...item};
     });
     setData(newData);
-  }, [data])
+  }, [data, setData]);
+
   const onCellFlag = useCallback((e, index) => {
     e.preventDefault();
     const newData = data.map((item, i) => {
@@ -36,9 +29,13 @@ const Board = ({ size }: IBoard) => {
       return {...item};
     });
     setData(newData);
-  }, [data])
-  const classes = useStyles({ size });
-  return (<Paper className={classes.root} elevation={6}>
+  }, [data, setData]);
+
+  const classes = useStyles({
+    width: GAME_SIZE[difficulty].width,
+    height: GAME_SIZE[difficulty].height,
+  });
+  return (<Paper className={classNames(classes.root, difficulty)} elevation={6}>
     {
       data.map((item, i) => (
         <div
@@ -46,11 +43,13 @@ const Board = ({ size }: IBoard) => {
           onContextMenu={(e) => onCellFlag(e, i)}
           className={classNames(classes.cell, {
             isOpen: item.isOpen,
-            // isBomb: item.isBomb,
+            isBomb: item.isBomb,
             isFlagged: item.isFlagged,
           })} key={i}>
-          <span className={classes.text}>
-            {item.isOpen && i%4===0 && i}
+          <span className={classNames(classes.content, difficulty)}>
+            {item.isOpen && i%4 === 0 && 9}
+            {item.isBomb && <BombIcon />}
+            {item.isFlagged && <FlagIcon />}
           </span>
         </div>
       ))
