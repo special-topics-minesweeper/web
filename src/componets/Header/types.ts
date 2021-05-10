@@ -1,5 +1,5 @@
 import { ReactNode, ReactNodeArray } from "react";
 
-export interface IHeader {
+export interface IHeader{
   children: ReactNode | ReactNodeArray;
 }

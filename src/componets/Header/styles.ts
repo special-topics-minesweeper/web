@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
   navItem: {
     textDecoration: 'none',
     color: theme.palette.primary.main,
+    '& > .active': {
+      backgroundColor: theme.palette.action.selected,
+    }
   }
 }));
 

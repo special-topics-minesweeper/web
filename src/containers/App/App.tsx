@@ -8,6 +8,7 @@ import PrivateRoute from "../../componets/PrivateRoute";
 import Authentication from "../Authentication";
 import { themeDark, themeLight } from "./theme";
 import Game from "../Game";
+import Instructions from "../Instructions";
 
 
 function App() {
@@ -15,19 +16,24 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ThemeProvider theme={prefersDarkMode ? themeDark: themeLight}>
+      <ThemeProvider theme={prefersDarkMode? themeDark: themeLight}>
         <Switch>
-        <PrivateRoute path="/play">
-          <Header>
-            <Game />
-          </Header>
-        </PrivateRoute>
         <Route path="/auth">
           <Authentication />
         </Route>
-        <Route path="/" >
-          <Redirect to='play'/>
-        </Route>
+          <PrivateRoute path="/play">
+            <Header>
+              <Game />
+            </Header>
+          </PrivateRoute>
+          <PrivateRoute path="/instructions">
+            <Header>
+              <Instructions />
+            </Header>
+          </PrivateRoute>
+          <Route path="/" >
+            <Redirect to="play"/>
+          </Route>
         </Switch>
       </ThemeProvider>
     </BrowserRouter>
