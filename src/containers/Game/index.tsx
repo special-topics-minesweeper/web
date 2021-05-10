@@ -48,5 +48,4 @@ const Game = () => {
       )}
   </div>)
 }
-// test
 export default Game;

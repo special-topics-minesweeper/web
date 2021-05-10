@@ -45,6 +45,7 @@ script:
   - echo $DOCKER_USERNAME
   - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
+  # Pushing only to latest for now
   - docker push $IMAGE_NAME:latest
-  - docker push $IMAGE_NAME:$TRAVIS_COMMIT
-  - docker push $IMAGE_NAME:$TRAVIS_BRANCH
+  # - docker push $IMAGE_NAME:$TRAVIS_COMMIT
+  # - docker push $IMAGE_NAME:$TRAVIS_BRANCH
