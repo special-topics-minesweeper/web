@@ -57,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  navItem: {
+    textDecoration: 'none',
+    color: theme.palette.primary.main,
+  }
 }));
 
 export default useStyles;

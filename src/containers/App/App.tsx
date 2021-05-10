@@ -15,7 +15,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ThemeProvider theme={prefersDarkMode? themeDark: themeLight}>
+      <ThemeProvider theme={prefersDarkMode ? themeDark: themeLight}>
         <Switch>
         <PrivateRoute path="/play">
           <Header>
