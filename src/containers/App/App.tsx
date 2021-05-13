@@ -9,6 +9,7 @@ import Authentication from "../Authentication";
 import { themeDark, themeLight } from "./theme";
 import Game from "../Game";
 import Instructions from "../Instructions";
+import Profile from "../Profile";
 
 
 function App() {
@@ -29,6 +30,11 @@ function App() {
           <PrivateRoute path="/instructions">
             <Header>
               <Instructions />
+            </Header>
+          </PrivateRoute>
+          <PrivateRoute path="/profile">
+            <Header>
+              <Profile />
             </Header>
           </PrivateRoute>
           <Route path="/" >

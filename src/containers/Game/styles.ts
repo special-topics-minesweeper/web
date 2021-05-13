@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'grid',
-    gridTemplateColumns: "auto  ",
+    gridTemplateColumns: "auto",
     gridColumnGap: 24,
     gridRowGap: 0,
     padding: '0px 36px',
