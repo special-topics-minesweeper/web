@@ -28,7 +28,7 @@ function App() {
     }).catch(error => {
       removeToken();
     });
-  })
+  }, []);
   return (
     <BrowserRouter>
       <ThemeProvider theme={prefersDarkMode ? themeDark : themeLight}>

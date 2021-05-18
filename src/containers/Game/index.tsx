@@ -4,12 +4,13 @@ import useStyles from "./styles";
 import { CircularProgress } from "@material-ui/core";
 import LevelChooser from "../LevelChooser";
 import { useCallback, useState } from "react";
-import { Difficulty, GAME_SIZE } from "./types";
+import { Difficulty } from "./types";
 import { ICell } from "../Board/types";
 import { createGame } from "../../utils/fetch/createGame";
 
 const Game = () => {
   const classes = useStyles();
+  const [gameId, setGameId] = useState('');
   const [data, setData] = useState<ICell[]>([]);
   const [difficulty, setDifficulty] = useState<Difficulty>();
   const [isLoading, setIsLoading] = useState(false);
@@ -18,38 +19,30 @@ const Game = () => {
     setDifficulty(difficulty);
     setIsLoading(true);
 
-    createGame({ difficulty }).then(data => console.log(data));
-
-    // setTimeout(() => {
-    //   const arr = [];
-    //   for(let  i = 0; i < GAME_SIZE[difficulty].width * GAME_SIZE[difficulty].height; i++){
-    //     arr.push({
-    //       isOpen: i % 7 === 0,
-    //       isBomb: i % 5 === 0,
-    //       isFlagged: i % 9 === 0,
-    //     });
-    //   }
-    //   setData(arr);
-    //   setIsLoading(false);
-    // }, 1000)
+    createGame({ difficulty }).then(data => {
+      setData(data.data.map.flat());
+      localStorage.setItem('gameId', data.data.id);
+      setGameId(data.data.id);
+      setIsLoading(false);
+    });
 
   }, []);
   return (
     <div className={classes.root}>
       {data && data.length && difficulty ? (
         <>
-          <Board difficulty={difficulty} data={data} setData={setData} />
-          <Sidebar />
+          <Board difficulty={difficulty} gameId={gameId} data={data} setData={setData}/>
+          <Sidebar/>
         </>
-      ): (
+      ) : (
         isLoading ?
           (<div className={classes.loading}>
-              <CircularProgress />
-            </div>)
+            <CircularProgress/>
+          </div>)
           :
           (<LevelChooser onSelect={onLevelSelect}/>)
       )}
-  </div>)
+    </div>)
 }
 
 export default Game;

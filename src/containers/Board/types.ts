@@ -1,9 +1,13 @@
 import { Difficulty } from "../Game/types";
-
+export enum Cell {
+  OPEN = 'open',
+  BOMB = 'bomb',
+  CLOSED = 'closed',
+  FLAGGED = 'flagged',
+}
 export interface ICell {
-  isOpen: boolean;
-  isBomb: boolean;
-  isFlagged: boolean;
+  type: Cell;
+  bomb_neighbors_count: number;
 }
 
 export interface IBoardStyles {
@@ -13,6 +17,7 @@ export interface IBoardStyles {
 
 export interface IBoard {
   difficulty: Difficulty;
+  gameId: string;
   data: ICell[];
   setData: any;
 }
