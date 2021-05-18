@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     '&.isFlagged': {
       backgroundColor: theme.palette.warning.light,
     },
+    '&.isGuessed': {
+      backgroundColor: theme.palette.success.light,
+    },
   },
   content: {
     fontWeight: 'bold',

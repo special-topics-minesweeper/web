@@ -4,6 +4,7 @@ export enum Cell {
   BOMB = 'bomb',
   CLOSED = 'closed',
   FLAGGED = 'flagged',
+  GUESSED = 'guessed',
 }
 export interface ICell {
   type: Cell;

@@ -6,6 +6,7 @@ const instance = axios.create({
   timeout: 10000,
 })
 
+console.log('process.env', process.env);
 instance.interceptors.request.use((config) => {
   config.headers.key = getToken();
   return config;

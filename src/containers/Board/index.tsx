@@ -14,6 +14,8 @@ import merge from "../../utils/mergeMatrices";
 const Board = ({ difficulty, gameId, data, setData }: IBoard) => {
 
   const onCellClick = useCallback((e, index) => {
+    if(data[index].type === Cell.FLAGGED) return;
+
     const [y, x] = indexToCoordinates({ difficulty, index });
     updateGame({ gameId: localStorage.getItem('gameId') || '', x, y }).then((response) => {
       setData(merge(data, response.data.map.flat()));
@@ -22,7 +24,7 @@ const Board = ({ difficulty, gameId, data, setData }: IBoard) => {
 
   const onCellFlag = useCallback((e, index) => {
     e.preventDefault();
-    console.log(index)
+    if(data[index].type === Cell.GUESSED) return;
     const newData = data.map((item, i) => {
       if (i === index) {
         return { ...item, type: item.type === Cell.FLAGGED ? Cell.CLOSED : Cell.FLAGGED };
@@ -49,10 +51,11 @@ const Board = ({ difficulty, gameId, data, setData }: IBoard) => {
             isOpen: item.type === Cell.OPEN,
             isBomb: item.type === Cell.BOMB,
             isFlagged: item.type === Cell.FLAGGED,
+            isGuessed: item.type === Cell.GUESSED,
           })} key={i}>
           <span className={classNames(classes.content, difficulty)}>
             {item.type === Cell.OPEN && !!item.bomb_neighbors_count && item.bomb_neighbors_count}
-            {item.type === Cell.BOMB && <BombIcon/>}
+            {(item.type === Cell.BOMB || item.type === Cell.GUESSED) && <BombIcon/>}
             {item.type === Cell.FLAGGED && <FlagIcon/>}
           </span>
         </div>
