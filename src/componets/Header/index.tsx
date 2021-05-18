@@ -15,16 +15,18 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import { useLocation } from 'react-router-dom';
 import useStyles from './styles';
 import { IHeader } from './types';
 import { Link } from "react-router-dom";
 import { navItems } from "./data";
+import classNames from "classnames";
 
 const Header = ({ children }: IHeader) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const location = useLocation();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -77,7 +79,9 @@ const Header = ({ children }: IHeader) => {
         <List>
           {navItems.map(item => (
             <Link to={item.href} key={item.title} className={classes.navItem}>
-              <ListItem button>
+              <ListItem button className={classNames({
+                active: item.href === location.pathname
+              })}>
                 <ListItemIcon> {item.icon} </ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItem>

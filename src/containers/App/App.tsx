@@ -9,6 +9,8 @@ import Authentication from "../Authentication";
 import { themeDark, themeLight } from "./theme";
 import { UserContext } from '../../utils/contexts';
 import Game from "../Game";
+import Instructions from "../Instructions";
+import Profile from "../Profile";
 import { get as getToken, remove as removeToken } from "../../utils/token";
 import { getUser } from "../../utils/fetch/getUser";
 
@@ -32,16 +34,26 @@ function App() {
       <ThemeProvider theme={prefersDarkMode ? themeDark : themeLight}>
         <UserContext.Provider value={{ user: userData, setUser }}>
           <Switch>
+            <Route path="/auth">
+              <Authentication/>
+            </Route>
             <PrivateRoute path="/play">
               <Header>
                 <Game/>
               </Header>
             </PrivateRoute>
-            <Route path="/auth">
-              <Authentication/>
-            </Route>
+            <PrivateRoute path="/instructions">
+              <Header>
+                <Instructions/>
+              </Header>
+            </PrivateRoute>
+            <PrivateRoute path="/profile">
+              <Header>
+                <Profile/>
+              </Header>
+            </PrivateRoute>
             <Route path="/">
-              <Redirect to='play'/>
+              <Redirect to="play"/>
             </Route>
           </Switch>
         </UserContext.Provider>

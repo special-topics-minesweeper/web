@@ -16,7 +16,6 @@ RUN npm run build
 
 # Stage 2
 
-FROM nginx:1.19.10
-
+FROM nginx:1.19.10-alpine
 ADD default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-step /app/build /usr/share/nginx/html
