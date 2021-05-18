@@ -5,3 +5,7 @@ export const get = () => {
 export const set = (token: string) => {
   return sessionStorage.setItem('token', token);
 }
+
+export const remove = () => {
+  return sessionStorage.removeItem('token');
+}

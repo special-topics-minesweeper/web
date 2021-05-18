@@ -8,8 +8,8 @@ const Authentication = () => {
     e.stopPropagation();
     setIsSignIn(prev => !prev)
   }, []);
-  console.log(isSignIn);
-  return (isSignIn ? <SignIn changeView={changeView}/>: <SignUp changeView={changeView}/>);
+
+  return (isSignIn ? <SignIn changeView={changeView} />: <SignUp changeView={changeView} />);
 }
 
 

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,18 +11,32 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import useStyles from "./styles";
 import { IAuth } from "../types";
+import loginUser from '../../../utils/fetch/loginUser';
+import { set as setToken } from '../../../utils/token';
 
 const SignIn = ({ changeView }: IAuth) => {
   const classes = useStyles();
   const history = useHistory();
-  const login = useCallback(() => {
-    sessionStorage.setItem('user', JSON.stringify({ firstName: 'Lilit', lastName: 'Karapetyan' }));
-    history.push('/play');
-  }, [history]);
+
+  const [user, setUser] = useState({
+    login: '',
+    password: '',
+  });
+  const onChange = useCallback((e, field) => {
+    setUser(prev => ({ ...prev, [field]: e.target.value }));
+  }, []);
+
+  const login = useCallback((e) => {
+    e.preventDefault();
+    loginUser(user).then(data => {
+      setToken(data.data.key);
+      history.push('/play');
+    });
+  }, [history, user]);
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+      <CssBaseline/>
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           Sign in
@@ -38,6 +52,7 @@ const SignIn = ({ changeView }: IAuth) => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e) => onChange(e, 'login')}
           />
           <TextField
             variant="outlined"
@@ -49,9 +64,10 @@ const SignIn = ({ changeView }: IAuth) => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(e) => onChange(e, 'password')}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" color="primary"/>}
             label="Remember me"
           />
           <Button

@@ -6,6 +6,7 @@ import LevelChooser from "../LevelChooser";
 import { useCallback, useState } from "react";
 import { Difficulty, GAME_SIZE } from "./types";
 import { ICell } from "../Board/types";
+import { createGame } from "../../utils/fetch/createGame";
 
 const Game = () => {
   const classes = useStyles();
@@ -17,18 +18,20 @@ const Game = () => {
     setDifficulty(difficulty);
     setIsLoading(true);
 
-    setTimeout(() => {
-      const arr = [];
-      for(let  i = 0; i < GAME_SIZE[difficulty].width * GAME_SIZE[difficulty].height; i++){
-        arr.push({
-          isOpen: i % 7 === 0,
-          isBomb: i % 5 === 0,
-          isFlagged: i % 9 === 0,
-        });
-      }
-      setData(arr);
-      setIsLoading(false);
-    }, 1000)
+    createGame({ difficulty }).then(data => console.log(data));
+
+    // setTimeout(() => {
+    //   const arr = [];
+    //   for(let  i = 0; i < GAME_SIZE[difficulty].width * GAME_SIZE[difficulty].height; i++){
+    //     arr.push({
+    //       isOpen: i % 7 === 0,
+    //       isBomb: i % 5 === 0,
+    //       isFlagged: i % 9 === 0,
+    //     });
+    //   }
+    //   setData(arr);
+    //   setIsLoading(false);
+    // }, 1000)
 
   }, []);
   return (

@@ -4,8 +4,8 @@ export interface ISignUp {
   email: string;
   username: string;
   password: string;
-  lastName: string;
-  firstName: string;
+  lastname: string;
+  firstname: string;
 }
 
 export interface ISignIn {
