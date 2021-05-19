@@ -16,7 +16,7 @@ const Board = ({ difficulty, gameId, data, setData }: IBoard) => {
   const onCellClick = useCallback((e, index) => {
     if(data[index].type === Cell.FLAGGED) return;
 
-    const [y, x] = indexToCoordinates({ difficulty, index });
+    const [x, y] = indexToCoordinates({ difficulty, index });
     updateGame({ gameId: localStorage.getItem('gameId') || '', x, y }).then((response) => {
       setData(merge(data, response.data.map.flat()));
     });
