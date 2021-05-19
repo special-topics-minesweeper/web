@@ -12,7 +12,7 @@ import indexToCoordinates from "../../utils/indexToCoordinates";
 import merge from "../../utils/mergeMatrices";
 import { get as getGameId } from '../../utils/gameId';
 
-const Board = ({ difficulty, data, setData, setFlagCount, gameStatus, setGameStatus }: IBoard) => {
+const Board = ({ difficulty, data, setData, setFlagCount, gameStatus, setGameStatus, setError }: IBoard) => {
 
   const onCellClick = useCallback((e, index) => {
     if (gameStatus !== GAME_STATUS.PENDING) return;
@@ -22,9 +22,12 @@ const Board = ({ difficulty, data, setData, setFlagCount, gameStatus, setGameSta
     updateGame({ gameId, x, y }).then((response) => {
       setData(merge(data, response.data.map.flat()));
       setGameStatus(response.data.status);
+    })
+    .catch((error) => {
+      setError(error.response.data.message);
     });
 
-  }, [data, difficulty, gameStatus, setData, setGameStatus]);
+  }, [data, difficulty, gameStatus, setData, setError, setGameStatus]);
 
   const onCellFlag = useCallback((e, index) => {
     e.preventDefault();

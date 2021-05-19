@@ -5,15 +5,12 @@ import Info from '../../componets/Info';
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { Snackbar } from "@material-ui/core";
 import { ISidebar } from "./types";
 import { GAME_SIZE, GAME_STATUS } from "../Game/types";
 import { useCallback } from "react";
+import Alert from "../../componets/Alert/Alert";
 
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="outlined" {...props} />;
-}
 
 const Sidebar = ({ difficulty, flagCount, gameStatus, onLevelSelect, setData }: ISidebar) => {
   const classes = useStyles();

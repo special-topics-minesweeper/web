@@ -23,5 +23,6 @@ export interface IBoard {
   setFlagCount: any;
   setGameStatus: any;
   gameStatus: GAME_STATUS;
+  setError: any;
 }
 

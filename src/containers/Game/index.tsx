@@ -1,13 +1,14 @@
 import Board from "../Board";
 import Sidebar from "../Sidebar";
 import useStyles from "./styles";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Snackbar } from "@material-ui/core";
 import LevelChooser from "../LevelChooser";
 import { useCallback, useState } from "react";
 import { Difficulty, GAME_STATUS } from "./types";
 import { ICell } from "../Board/types";
 import { createGame } from "../../utils/fetch/createGame";
 import { set as setGameId } from '../../utils/gameId';
+import Alert from "../../componets/Alert/Alert";
 
 const Game = () => {
   const classes = useStyles();
@@ -16,6 +17,7 @@ const Game = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [flagCount, setFlagCount] = useState(0);
   const [gameStatus, setGameStatus] = useState<GAME_STATUS>(GAME_STATUS.PENDING);
+  const [error, setError] = useState('');
 
   const onLevelSelect = useCallback((difficulty: Difficulty) => {
     setDifficulty(difficulty);
@@ -27,6 +29,8 @@ const Game = () => {
       setIsLoading(false);
       setFlagCount(0);
       setGameStatus(GAME_STATUS.PENDING);
+    }).catch((error) => {
+      setError(error.response.data.message);
     });
 
   }, []);
@@ -42,6 +46,7 @@ const Game = () => {
             setFlagCount={setFlagCount}
             setGameStatus={setGameStatus}
             gameStatus={gameStatus}
+            setError={setError}
           />
           <Sidebar
             difficulty={difficulty}
@@ -59,6 +64,19 @@ const Game = () => {
           :
           (<LevelChooser onSelect={onLevelSelect}/>)
       )}
+      <Snackbar
+        open={!!error}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Alert
+          severity="error"
+        >
+          {error}
+        </Alert>
+      </Snackbar>
     </div>)
 }
 
