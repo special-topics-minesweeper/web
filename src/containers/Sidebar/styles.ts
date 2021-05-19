@@ -8,7 +8,7 @@ export const useStyles = makeStyles({
     flexDirection: 'column',
   },
   buttons: {
-    display: 'flex',
+    display: 'flex!important',
     justifyContent: 'center',
     margin: '12px 0px',
   },
