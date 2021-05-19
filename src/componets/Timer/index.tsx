@@ -23,7 +23,7 @@ const Timer = ({ reset, setReset, isStopped, ...props }: ITimer) => {
       setReset(false);
     }
   }, [reset, setReset])
-  console.log(reset, setReset, isStopped);
+
   return (<div className={classes.root}>
     <TimerIcon className={classes.icon}/>
     <span className={classes.time} {...props}>
