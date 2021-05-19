@@ -67,7 +67,10 @@ const useStyles = makeStyles((theme) => ({
   toggleWrapper: {
     alignContent: 'center',
     flexDirection: 'row',
-    '& > *': {
+    '& > $menuButton': {
+      display: 'inline-flex',
+    },
+    '& > .name': {
       display: 'inline-flex',
     }
   },

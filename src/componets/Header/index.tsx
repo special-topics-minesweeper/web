@@ -59,7 +59,7 @@ const Header = ({ children }: IHeader) => {
             >
               <MenuIcon/>
             </IconButton>
-            <Typography variant="h6" noWrap>
+            <Typography variant="h6" noWrap className="name">
               {user?.firstname} {user?.lastname}
             </Typography>
           </div>

@@ -126,8 +126,8 @@ const SignUp = ({ changeView } : IAuth) => {
             Sign Up
           </Button>
           {!!error && <Alert severity="error" variant="outlined" >{error}</Alert>}
-          <Grid container justify="flex-end">
-            <Grid item>
+          <Grid container justify="flex-end" >
+            <Grid item className={classes.viewSwitcher}>
               <Link onClick={changeView} variant="body2">
                 Already have an account? Sign in
               </Link>

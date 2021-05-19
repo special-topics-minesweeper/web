@@ -22,14 +22,18 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     alignContent: 'center',
     alignItems: 'center',
-    '& > *': {
+    '& > span': {
+      color: theme.palette.primary.dark,
+      margin: theme.spacing(2),
+      fontSize: 24,
+      whiteSpace: 'noWrap',
+      textAlign: 'center'
+    },
+    '& > svg': {
       color: theme.palette.primary.dark,
       margin: theme.spacing(2),
       minWidth: 48,
       height: 48,
-      fontSize: 24,
-      whiteSpace: 'noWrap',
-      textAlign: 'center'
     }
   },
   highlight: {

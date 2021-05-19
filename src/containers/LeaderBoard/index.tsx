@@ -66,7 +66,7 @@ const LeaderBoard = () => {
       </FormControl>
       {!leaders.length ? (
           <div className={classes.empty}>
-            <NoResult />
+            <NoResult/>
             <span>No results, try another difficulty</span>
           </div>
         )
@@ -84,7 +84,7 @@ const LeaderBoard = () => {
               <TableBody>
                 {leaders.map((row: any) => {
                   return (
-                    <TableRow key={row.id} className={classNames({
+                    <TableRow key={row.username} className={classNames({
                       [classes.highlight]: row.username === user?.username
                     })}>
                       <TableCell component="th" scope="row">

@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  viewSwitcher: {
+    lineHeight: '24px',
+    margin: '12px 0px',
+    cursor: 'pointer',
+  }
 }));
 
 export default useStyles;

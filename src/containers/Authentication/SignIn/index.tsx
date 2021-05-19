@@ -3,8 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -13,10 +12,12 @@ import useStyles from "./styles";
 import { IAuth } from "../types";
 import loginUser from '../../../utils/fetch/loginUser';
 import { set as setToken } from '../../../utils/token';
+import { Alert } from "@material-ui/lab";
 
 const SignIn = ({ changeView }: IAuth) => {
   const classes = useStyles();
   const history = useHistory();
+  const [error, setError] = useState('');
 
   const [user, setUser] = useState({
     login: '',
@@ -31,6 +32,8 @@ const SignIn = ({ changeView }: IAuth) => {
     loginUser(user).then(data => {
       setToken(data.data.key);
       history.push('/play');
+    }).catch((error) => {
+      setError(error.response.data.message);
     });
   }, [history, user]);
 
@@ -66,10 +69,6 @@ const SignIn = ({ changeView }: IAuth) => {
             autoComplete="current-password"
             onChange={(e) => onChange(e, 'password')}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary"/>}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -80,14 +79,10 @@ const SignIn = ({ changeView }: IAuth) => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link onClick={changeView} variant="body2">
+          {!!error && <Alert severity="error" variant="outlined" >{error}</Alert>}
+          <Grid container justify="flex-end">
+            <Grid item className={classes.viewSwitcher} >
+              <Link onClick={changeView} variant="body2" >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
