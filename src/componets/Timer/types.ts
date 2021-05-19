@@ -1,4 +1,6 @@
 export interface ITimer {
-  isRunning: boolean,
-  className?: string,
+  reset: boolean;
+  className?: string;
+  setReset: any;
+  isStopped: boolean;
 }

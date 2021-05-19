@@ -8,14 +8,16 @@ import Button from "@material-ui/core/Button";
 import { Snackbar } from "@material-ui/core";
 import { ISidebar } from "./types";
 import { GAME_SIZE, GAME_STATUS } from "../Game/types";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import Alert from "../../componets/Alert/Alert";
 
 
 const Sidebar = ({ difficulty, flagCount, gameStatus, onLevelSelect, setData }: ISidebar) => {
   const classes = useStyles();
+  const [resetTimer, setResetTimer] = useState(gameStatus !== GAME_STATUS.PENDING);
   const onRestart = useCallback(() => {
     onLevelSelect(difficulty);
+    setResetTimer(true);
   }, [difficulty, onLevelSelect]);
 
   const onQuit = useCallback(() => {
@@ -24,7 +26,7 @@ const Sidebar = ({ difficulty, flagCount, gameStatus, onLevelSelect, setData }: 
 
   return (<Paper className={classes.root}>
     <div className={classes.upper}>
-      <Timer isRunning={gameStatus === GAME_STATUS.PENDING}/>
+      <Timer reset={resetTimer} setReset={setResetTimer} isStopped={gameStatus !== GAME_STATUS.PENDING}/>
       <Info> {flagCount} Flags </Info>
       <Info> {GAME_SIZE[difficulty].bombs} Bombs </Info>
     </div>

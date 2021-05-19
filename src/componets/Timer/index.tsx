@@ -5,25 +5,29 @@ import { useEffect, useState } from "react";
 import { secondsToTime } from "./utils";
 import useStyles from "./styles";
 
-const Timer = ({ isRunning, ...props }: ITimer) => {
+const Timer = ({ reset, setReset, isStopped, ...props }: ITimer) => {
   const classes = useStyles();
+
   const [time, setTime] = useState(0);
-  const [showTime, setShowTime] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setTime(prev => {
+      if(isStopped) return prev;
+      return prev + 1;
+    }), 1000);
+    return () => clearInterval(id);
+  }, [isStopped]);
 
   useEffect(() => {
-    if(!isRunning) {
-      setShowTime(time);
+    if(reset){
       setTime(0);
-      return;
+      setReset(false);
     }
-    const intervalId = setInterval(() => isRunning && setTime(prev => prev + 1), 1000);
-    return () => { clearInterval(intervalId) }
-  }, [isRunning, time])
-
+  }, [reset, setReset])
+  console.log(reset, setReset, isStopped);
   return (<div className={classes.root}>
     <TimerIcon className={classes.icon}/>
     <span className={classes.time} {...props}>
-      {secondsToTime(isRunning ? time : showTime)}
+      {secondsToTime(time)}
     </span>
   </div>);
 };
