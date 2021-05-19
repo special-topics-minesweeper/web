@@ -83,7 +83,6 @@ const LeaderBoard = () => {
               </TableHead>
               <TableBody>
                 {leaders.map((row: any) => {
-                  console.log(row)
                   return (
                     <TableRow key={row.id} className={classNames({
                       [classes.highlight]: row.username === user?.username

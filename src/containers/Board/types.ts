@@ -1,4 +1,4 @@
-import { Difficulty } from "../Game/types";
+import { Difficulty, GAME_STATUS } from "../Game/types";
 export enum Cell {
   OPEN = 'open',
   BOMB = 'bomb',
@@ -18,8 +18,10 @@ export interface IBoardStyles {
 
 export interface IBoard {
   difficulty: Difficulty;
-  gameId: string;
   data: ICell[];
   setData: any;
+  setFlagCount: any;
+  setGameStatus: any;
+  gameStatus: GAME_STATUS;
 }
 

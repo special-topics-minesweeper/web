@@ -6,35 +6,44 @@ import useStyles from "./styles";
 import { Cell, IBoard } from "./types";
 import FlagIcon from "../../componets/Icons/Flag";
 import BombIcon from "../../componets/Icons/Bomb";
-import { GAME_SIZE } from '../Game/types';
+import { GAME_SIZE, GAME_STATUS } from '../Game/types';
 import { updateGame } from "../../utils/fetch/updateGame";
 import indexToCoordinates from "../../utils/indexToCoordinates";
 import merge from "../../utils/mergeMatrices";
+import { get as getGameId } from '../../utils/gameId';
 
-const Board = ({ difficulty, gameId, data, setData }: IBoard) => {
+const Board = ({ difficulty, data, setData, setFlagCount, gameStatus, setGameStatus }: IBoard) => {
 
   const onCellClick = useCallback((e, index) => {
-    if(data[index].type === Cell.FLAGGED) return;
-
+    if (gameStatus !== GAME_STATUS.PENDING) return;
+    if (data[index].type === Cell.FLAGGED || data[index].type === Cell.OPEN) return;
     const [x, y] = indexToCoordinates({ difficulty, index });
-    updateGame({ gameId: localStorage.getItem('gameId') || '', x, y }).then((response) => {
+    const gameId = getGameId() || '';
+    updateGame({ gameId, x, y }).then((response) => {
       setData(merge(data, response.data.map.flat()));
+      setGameStatus(response.data.status);
     });
-  }, [data, difficulty, setData]);
+
+  }, [data, difficulty, gameStatus, setData, setGameStatus]);
 
   const onCellFlag = useCallback((e, index) => {
     e.preventDefault();
-    if(data[index].type === Cell.GUESSED) return;
+    if (gameStatus !== GAME_STATUS.PENDING) return;
+    if (data[index].type === Cell.GUESSED) return;
     const newData = data.map((item, i) => {
-      if (i === index) {
-        return { ...item, type: item.type === Cell.FLAGGED ? Cell.CLOSED : Cell.FLAGGED };
+      if (i !== index || !(item.type === Cell.CLOSED || item.type === Cell.FLAGGED)) return { ...item };
+
+      if (item.type === Cell.FLAGGED) {
+        setFlagCount((prev: any) => prev - 1);
+        return { ...item, type: Cell.CLOSED };
       }
-      return { ...item };
+
+      setFlagCount((prev: any) => prev + 1);
+      return { ...item, type: Cell.FLAGGED };
     });
-    console.log(newData)
     setData(newData);
 
-  }, [data, setData]);
+  }, [data, gameStatus, setData, setFlagCount]);
 
   const classes = useStyles({
     width: GAME_SIZE[difficulty].width,

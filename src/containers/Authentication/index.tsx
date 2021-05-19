@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import { remove as removeToken } from "../../utils/token";
+import { remove as removeGameId } from "../../utils/gameId";
 
 const Authentication = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -12,7 +13,7 @@ const Authentication = () => {
 
   useEffect(() => {
     removeToken();
-    localStorage.removeItem('gameId');
+    removeGameId();
   }, [])
 
   return (isSignIn ? <SignIn changeView={changeView} />: <SignUp changeView={changeView} />);
