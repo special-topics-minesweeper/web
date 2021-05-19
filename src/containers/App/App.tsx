@@ -13,6 +13,7 @@ import Instructions from "../Instructions";
 import Profile from "../Profile";
 import { get as getToken, remove as removeToken } from "../../utils/token";
 import { getUser } from "../../utils/fetch/getUser";
+import LeaderBoard from "../LeaderBoard";
 
 
 function App() {
@@ -50,6 +51,11 @@ function App() {
             <PrivateRoute path="/profile">
               <Header>
                 <Profile/>
+              </Header>
+            </PrivateRoute>
+            <PrivateRoute path="/leaders">
+              <Header>
+                <LeaderBoard/>
               </Header>
             </PrivateRoute>
             <Route path="/">

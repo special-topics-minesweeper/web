@@ -14,7 +14,7 @@ export const navItems = [{
 }, {
   title: 'Leaderboard',
   icon: <BarChartIcon />,
-  href: '/leaderboard',
+  href: '/leaders',
 }, {
   title: 'Instructions',
   icon: <ImportContactsIcon />,

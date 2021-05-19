@@ -63,6 +63,20 @@ const useStyles = makeStyles((theme) => ({
     '& > .active': {
       backgroundColor: theme.palette.action.selected,
     }
+  },
+  toggleWrapper: {
+    alignContent: 'center',
+    flexDirection: 'row',
+    '& > *': {
+      display: 'inline-flex',
+    }
+  },
+  toolbar: {
+    justifyContent: 'space-between',
+  },
+  logOut: {
+    color: theme.palette.text.primary,
+    textDecoration: 'none',
   }
 }));
 
